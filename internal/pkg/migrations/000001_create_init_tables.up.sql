@@ -12,3 +12,16 @@ CREATE TABLE books (
 );
 
 CREATE INDEX active_books ON books (title) WHERE book_status = 1;
+
+CREATE OR REPLACE FUNCTION update_books_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER update_books_updated_at_trigger
+BEFORE UPDATE ON books
+FOR EACH ROW
+EXECUTE FUNCTION update_books_updated_at_column();
