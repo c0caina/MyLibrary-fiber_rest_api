@@ -14,14 +14,29 @@ type Book struct {
 }
 
 func (b *Book) GetBooks() ([]models.Book, error) {
-	books := []models.Book{}
-	err := b.QueryRow(context.Background(), `SELECT * FROM books`).Scan(&books)
+	var books []models.Book
+	rows, err := b.Query(context.Background(), `SELECT * FROM books`)
+	if err != nil {
+        return books, err
+    }
+
+	defer rows.Close()
+	
+	for rows.Next() {
+		var book models.Book
+		if err := rows.Scan(&book.ID, &book.CreatedAt, &book.UpdatedAt, &book.Title, &book.Author, &book.BookStatus); err != nil{
+			return books, err
+		}
+		books = append(books, book)
+	}
+
+
 	return books, err
 }
 
 func (b *Book) GetBook(id uuid.UUID) (models.Book, error) {
-	book := models.Book{}
-	err := b.QueryRow(context.Background(), `SELECT * FROM books WHERE id = $1`, id).Scan(&book)
+	var book models.Book
+	err := b.QueryRow(context.Background(), `SELECT * FROM books WHERE id = $1`, id).Scan(&book.ID, &book.CreatedAt, &book.UpdatedAt, &book.Title, &book.Author, &book.BookStatus)
 	return book, err
 }
 
@@ -30,8 +45,8 @@ func (b *Book) CreateBook(mb *models.Book) error {
 	return err
 }
 
-func (b *Book) UpdateBook(id uuid.UUID, mb *models.Book) error {
-	_, err := b.Exec(context.Background(), `UPDATE books SET title = $2, author = $3, book_status = $4, WHERE id = $1`	, id, mb.Title, mb.Author, mb.BookStatus)
+func (b *Book) UpdateBook(mb *models.Book) error {
+	_, err := b.Exec(context.Background(), `UPDATE books SET title = $2, author = $3, book_status = $4 WHERE id = $1`, mb.ID, mb.Title, mb.Author, mb.BookStatus)
 	return err
 }
 
