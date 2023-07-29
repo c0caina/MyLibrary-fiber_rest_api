@@ -26,12 +26,12 @@ func (b *Book) GetBook(id uuid.UUID) (models.Book, error) {
 }
 
 func (b *Book) CreateBook(mb *models.Book) error {
-	_, err := b.Exec(context.Background(), `INSERT INTO books VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, mb.ID, mb.CreatedAt, mb.UpdatedAt, mb.UserID, mb.Title, mb.Author, mb.BookStatus, mb.BookAttrs)
+	_, err := b.Exec(context.Background(), `INSERT INTO books VALUES ($1, $2, $3, $4, $5, $6, $7)`, mb.ID, mb.CreatedAt, mb.UpdatedAt, mb.UserID, mb.Title, mb.Author, mb.BookStatus,)
 	return err
 }
 
 func (b *Book) UpdateBook(id uuid.UUID, mb *models.Book) error {
-	_, err := b.Exec(context.Background(), `UPDATE books SET updated_at = $2, title = $3, author = $4, book_status = $5, book_attrs = $6 WHERE id = $1`	, id, mb.UpdatedAt, mb.Title, mb.Author, mb.BookStatus, mb.BookAttrs)
+	_, err := b.Exec(context.Background(), `UPDATE books SET updated_at = $2, title = $3, author = $4, book_status = $5, WHERE id = $1`	, id, mb.UpdatedAt, mb.Title, mb.Author, mb.BookStatus)
 	return err
 }
 
