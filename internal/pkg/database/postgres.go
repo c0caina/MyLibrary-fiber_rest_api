@@ -2,13 +2,13 @@ package database
 
 import (
 	"context"
-	//"os"
+	"os"
 
 	"github.com/jackc/pgx/v5"
 )
 
 func newPostgreSQL() (*pgx.Conn, error) {
-	conn, err := pgx.Connect(context.Background(), "postgres://username:password@localhost:5432/database_name")
+	conn, err := pgx.Connect(context.Background(), os.Getenv("POSTGRES_SERVER_URL"))
 	if err != nil {
 		defer conn.Close(context.Background())
 		return conn, err
