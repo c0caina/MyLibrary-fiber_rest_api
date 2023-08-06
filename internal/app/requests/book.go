@@ -17,19 +17,18 @@ func (b *Book) GetBooks() ([]models.Book, error) {
 	var books []models.Book
 	rows, err := b.Query(context.Background(), `SELECT * FROM books`)
 	if err != nil {
-        return books, err
-    }
+		return books, err
+	}
 
 	defer rows.Close()
-	
+
 	for rows.Next() {
 		var book models.Book
-		if err := rows.Scan(&book.ID, &book.CreatedAt, &book.UpdatedAt, &book.Title, &book.Author, &book.BookStatus); err != nil{
+		if err := rows.Scan(&book.ID, &book.CreatedAt, &book.UpdatedAt, &book.Title, &book.Author, &book.BookStatus); err != nil {
 			return books, err
 		}
 		books = append(books, book)
 	}
-
 
 	return books, err
 }
@@ -41,7 +40,7 @@ func (b *Book) GetBook(id uuid.UUID) (models.Book, error) {
 }
 
 func (b *Book) CreateBook(mb *models.Book) error {
-	_, err := b.Exec(context.Background(), `INSERT INTO books (title, author, book_status) VALUES ($1, $2, $3)`, mb.Title, mb.Author, mb.BookStatus,)
+	_, err := b.Exec(context.Background(), `INSERT INTO books (title, author, book_status) VALUES ($1, $2, $3)`, mb.Title, mb.Author, mb.BookStatus)
 	return err
 }
 

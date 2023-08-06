@@ -13,5 +13,5 @@ func newPostgreSQL() (*pgx.Conn, error) {
 		defer conn.Close(context.Background())
 		return conn, err
 	}
-return conn, err
+	return conn, err
 }

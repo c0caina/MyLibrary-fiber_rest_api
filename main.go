@@ -12,15 +12,12 @@ import (
 func main() {
 	app := fiber.New()
 
-	
-	middleware.FiberMiddleware(app) 
+	middleware.FiberMiddleware(app)
 
-	
-	routes.PublicRoutes(app)  
-	routes.PrivateRoutes(app) 
-	routes.NotFoundRoute(app) 
+	routes.PublicRoutes(app)
+	routes.PrivateRoutes(app)
+	routes.NotFoundRoute(app)
 
-	
 	if err := app.Listen(os.Getenv("SERVER_URL")); err != nil {
 		log.Printf("Server is not running! Reason: %v", err)
 	}

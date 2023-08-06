@@ -11,9 +11,7 @@ func PrivateRoutes(a *fiber.App) {
 
 	route.Post("/book", middleware.JWTProtected(), controllers.CreateBook)
 
-	
 	route.Put("/book", middleware.JWTProtected(), controllers.UpdateBook)
 
-	
 	route.Delete("/book", middleware.JWTProtected(), controllers.DeleteBook)
 }
