@@ -27,6 +27,6 @@ func GenerateAccessJWT() (string, error) {
 	if err != nil {
 		return tokenString, err
 	}
-	
+
 	return tokenString, nil
 }

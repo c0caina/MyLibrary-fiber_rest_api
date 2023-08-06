@@ -63,25 +63,25 @@ func (p *postgres) GetBook(id uuid.UUID) (entities.Book, error) {
 	return book, err
 }
 
-// CreateBook is a method of postgres that creates a new book in the database using the entities.Book object passed as an argument 
-// It executes an insert statement with the title, author and book_status fields of the book object 
+// CreateBook is a method of postgres that creates a new book in the database using the entities.Book object passed as an argument
+// It executes an insert statement with the title, author and book_status fields of the book object
 // If there is an error, it returns the error
 func (p *postgres) CreateBook(mb *entities.Book) error {
 	_, err := p.Exec(context.Background(), `INSERT INTO books (title, author, book_status) VALUES ($1, $2, $3)`, mb.Title, mb.Author, mb.BookStatus)
 	return err
 }
 
-// UpdateBook is a method of postgres that updates an existing book in the database using the entities.Book object passed as an argument 
-// It executes an update statement with the id, title, author and book_status fields of the book object 
+// UpdateBook is a method of postgres that updates an existing book in the database using the entities.Book object passed as an argument
+// It executes an update statement with the id, title, author and book_status fields of the book object
 // If there is an error, it returns the error
 func (p *postgres) UpdateBook(mb *entities.Book) error {
 	_, err := p.Exec(context.Background(), `UPDATE books SET title = $2, author = $3, book_status = $4 WHERE id = $1`, mb.ID, mb.Title, mb.Author, mb.BookStatus)
 	return err
 }
 
-// DeleteBook is a method of postgres that deletes an existing book in the database by id 
-// It executes a delete statement with the id field 
-// If there is an error, it returns the error 
+// DeleteBook is a method of postgres that deletes an existing book in the database by id
+// It executes a delete statement with the id field
+// If there is an error, it returns the error
 func (p *postgres) DeleteBook(id uuid.UUID) error {
 	_, err := p.Exec(context.Background(), `DELETE FROM books WHERE id = $1`, id)
 	return err
