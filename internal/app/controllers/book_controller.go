@@ -3,8 +3,8 @@ package controllers
 import (
 	"time"
 
+	postgresql "github.com/c0caina/MyLibrary-fiber_rest_api/database/postgreSQL"
 	"github.com/c0caina/MyLibrary-fiber_rest_api/internal/app/models"
-	"github.com/c0caina/MyLibrary-fiber_rest_api/internal/pkg/database"
 	utils "github.com/c0caina/MyLibrary-fiber_rest_api/pkg/utilities"
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
@@ -12,7 +12,7 @@ import (
 
 func GetBooks(c *fiber.Ctx) error {
 
-	db, err := database.OpenDBConnection()
+	db, err := postgresql.NewPostgreSQL()
 	if err != nil {
 
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -50,7 +50,7 @@ func GetBook(c *fiber.Ctx) error {
 		})
 	}
 
-	db, err := database.OpenDBConnection()
+	db, err := postgresql.NewPostgreSQL()
 	if err != nil {
 
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -107,7 +107,7 @@ func CreateBook(c *fiber.Ctx) error {
 		})
 	}
 
-	db, err := database.OpenDBConnection()
+	db, err := postgresql.NewPostgreSQL()
 	if err != nil {
 
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -177,7 +177,7 @@ func UpdateBook(c *fiber.Ctx) error {
 		})
 	}
 
-	db, err := database.OpenDBConnection()
+	db, err := postgresql.NewPostgreSQL()
 	if err != nil {
 
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -251,7 +251,7 @@ func DeleteBook(c *fiber.Ctx) error {
 		})
 	}
 
-	db, err := database.OpenDBConnection()
+	db, err := postgresql.NewPostgreSQL()
 	if err != nil {
 
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
