@@ -5,6 +5,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// NewValidator is a function that creates a new instance of the validator and registers a custom validation for UUID
 func NewValidator() *validator.Validate {
 	validate := validator.New()
 	_ = validate.RegisterValidation("uuid", func(fl validator.FieldLevel) bool {
@@ -18,6 +19,7 @@ func NewValidator() *validator.Validate {
 	return validate
 }
 
+// ValidatorErrors is a function that takes a validation error and returns a map of fields and error messages
 func ValidatorErrors(err error) map[string]string {
 	fields := map[string]string{}
 	

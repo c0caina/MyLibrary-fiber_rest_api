@@ -8,10 +8,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
+// TokenMetadata is a structure that stores the expiration time of the token
 type TokenMetadata struct {
 	Expires int64
 }
 
+// ParceJWT is a function that parses the JWT token from the request context and returns its metadata
 func ParceJWT(c *fiber.Ctx) (*TokenMetadata, error) {
 	token, err := verifyToken(c)
 	if err != nil {
@@ -30,6 +32,7 @@ func ParceJWT(c *fiber.Ctx) (*TokenMetadata, error) {
 	return nil, err
 }
 
+// extractToken is a function that extracts the JWT token from the Authorization header of the request
 func extractToken(c *fiber.Ctx) string {
 	bearToken := c.Get("Authorization")
 
@@ -41,6 +44,7 @@ func extractToken(c *fiber.Ctx) string {
 	return ""
 }
 
+// verifyToken is a function that verifies the validity of the JWT token using the secret key
 func verifyToken(c *fiber.Ctx) (*jwt.Token, error) {
 	tokenString := extractToken(c)
 
@@ -52,6 +56,7 @@ func verifyToken(c *fiber.Ctx) (*jwt.Token, error) {
 	return token, nil
 }
 
+// jwtKeyFunc is a function that returns the secret key for the JWT token from the environment variable
 func jwtKeyFunc(token *jwt.Token) (interface{}, error) {
 	return []byte(os.Getenv("JWT_SECRET_KEY")), nil
 }
