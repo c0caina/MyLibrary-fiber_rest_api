@@ -13,7 +13,6 @@ type TokenMetadata struct {
 }
 
 func ParceJWT(c *fiber.Ctx) (*TokenMetadata, error) {
-
 	token, err := verifyToken(c)
 	if err != nil {
 		return nil, err

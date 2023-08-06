@@ -8,9 +8,7 @@ import (
 
 func FiberMiddleware(a *fiber.App) {
 	a.Use(
-
 		cors.New(),
-
 		logger.New(),
 	)
 }
