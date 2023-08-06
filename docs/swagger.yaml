@@ -1,0 +1,175 @@
+definitions:
+  entities.Book:
+    properties:
+      author:
+        maxLength: 255
+        type: string
+      book_status:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: string
+      title:
+        maxLength: 255
+        type: string
+      updated_at:
+        type: string
+    required:
+    - author
+    - book_status
+    - title
+    type: object
+info:
+  contact: {}
+  description: Documentation with the ability to touch the api.
+  title: MyLibrary API
+  version: "0.1"
+paths:
+  /book:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Book ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Delete book by given ID
+      tags:
+      - Book
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Title
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: Author
+        in: body
+        name: author
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new book
+      tags:
+      - Book
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Book ID
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Title
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: Author
+        in: body
+        name: author
+        required: true
+        schema:
+          type: string
+      - description: Book status
+        in: body
+        name: book_status
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update book
+      tags:
+      - Book
+  /book/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entities.Book'
+      summary: Get book by given ID
+      tags:
+      - Book
+  /books:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/entities.Book'
+            type: array
+      summary: Get all books
+      tags:
+      - Books
+  /token/new:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: Create a new access token
+      tags:
+      - Token
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
